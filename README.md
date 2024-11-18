@@ -17,4 +17,6 @@ Hardcoded exported filenames for refactored data
 	localAD files are called "_localAD.csv"
 	azureAD files are called "_intune.csv"
 
+Targeting things to strip out of each line is now easier. Edit the Strip array vaiable
 
+	@strip = ("X");   #  Example of adding more/changing the list to cycle through ("x", "y", "z")
