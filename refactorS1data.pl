@@ -2,7 +2,7 @@
 # Name: refactorS1data.pl
 # Author: Jason Campisi
 # Date: 11/18/2024
-# Version: v1.1.0
+# Version: v1.1.1
 # Repository: https://github.com/xeoron/refactor_S1data
 # Purpose: Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only
 # License: Released under GPL v3 or higher. Details here http://www.gnu.org/licenses/gpl.html
@@ -17,7 +17,7 @@ my $filename_localAD = "_localAD.csv";
 my $filename_intune = "_intune.csv";
 
 # add more things to strip out of the csv file by adding a comma after the quotes and then another quote
-my @strip = ("Dell Inc. - ");   #  Example of adding more: ("x", "y", "z")
+my @strip = ("Dell Inc. - ");   #  Example of adding more: = ("x", "y", "z");
 
 my ($data, $count, $line1) = ("", 0, "");
 my @lad = ();
