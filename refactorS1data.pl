@@ -39,13 +39,19 @@ sub printToFile($) {  # pass the string that has the file to process
 }#end printToFile
 
 sub main (){
+
+ if (scalar(@ARGV)==0){
+    print "Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only\n";
+    print "   Usage: refactorS1data.pl s1Data.csv\n";
+    exit; 
+ } 
+
  for $data (<>){   # read the file line by line passed at runtime
    $line1 = $data if ($count++ == 0);
    foreach my $s (@strip){
       $data =~s/$s//;  #strip data
    }
    
-
    if ($data=~m/$ladGROUP/){  #local AD group name
       push (@lad, $data); 
       next;
@@ -66,9 +72,6 @@ sub main (){
 }#nd main()
 
 #print Dumper(@ARGV); exit;
-if (scalar(@ARGV)==0){
-  print "\nPlease provide a s1 data export file.\nUsage: ./refactorS1data.pl s1Data.csv\n";
-  exit; 
-}
+
 main();
 
