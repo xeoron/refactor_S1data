@@ -16,7 +16,7 @@ my ($ladGROUP, $azureGROUP) = ("IN", "WORKGROUP");  #Group names of Local AD and
 my $filename_localAD = "_localAD.csv";
 my $filename_intune = "_intune.csv";
 
-# add more things to strip by adding a comma after the quotes and then another quote
+# add more things to strip out of the csv file by adding a comma after the quotes and then another quote
 my @strip = ("Dell Inc. - ");   #  Example of adding more: ("x", "y", "z")
 
 my ($data, $count, $line1) = ("", 0, "");
