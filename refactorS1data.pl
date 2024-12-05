@@ -2,7 +2,7 @@
 # Name: refactorS1data.pl
 # Author: Jason Campisi
 # Date: 12/5/2024
-# Version: v1.2.0
+# Version: v1.2.1
 # Repository: https://github.com/xeoron/refactor_S1data
 # Purpose: Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only
 # License: Released under GPL v3 or higher. Details here http://www.gnu.org/licenses/gpl.html
@@ -22,7 +22,7 @@ my @strip = ("Dell Inc. - ");   #  Example of adding more: = ("x", "y", "z");
 
 sub printToFile($@) {  #Requires $filename, @csv_DATA
  my ($filename, @data)=@_;
- return 0 if ($filename eq "" and scalar(@data)==0); # #if varaibles are empty return false.
+ return 0 if ($filename eq "" or scalar(@data)==0); # #if varaibles are empty return false.
 
   open(FH, '>', $filename) or return 0;#die $!;
      print FH $line1;  #head description of the columns
@@ -67,7 +67,7 @@ sub main (){
 
   #print Dumper(@azure);
   print "Writing to file $filename_intune\n";
-  
+
   if(printToFile($filename_intune, @lad)){ print "  ...Done\n"; } 
   else { print "Failed.... filename or data not provide\n";}
 }#end main()
