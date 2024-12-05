@@ -2,7 +2,7 @@
 # Name: refactorS1data.pl
 # Author: Jason Campisi
 # Date: 12/5/2024
-# Version: v1.2.1
+# Version: v1.3.1
 # Repository: https://github.com/xeoron/refactor_S1data
 # Purpose: Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only
 # License: Released under GPL v3 or higher. Details here http://www.gnu.org/licenses/gpl.html
@@ -21,15 +21,17 @@ my @strip = ("Dell Inc. - ");   #  Example of adding more: = ("x", "y", "z");
 
 
 sub printToFile($@) {  #Requires $filename, @csv_DATA
- my ($filename, @data)=@_;
- return 0 if ($filename eq "" or scalar(@data)==0); # #if varaibles are empty return false.
+ my ($filename, @data) = @_;
+ my $result = "Failed.... filename or data not provide";
 
-  open(FH, '>', $filename) or return 0;#die $!;
+ return $result if ($filename eq "" or scalar(@data)==0); # #if varaibles are empty return false.
+
+  open(FH, '>', $filename) or return $result;
      print FH $line1;  #head description of the columns
      foreach (@data){ print FH $_; }
    close(FH);
-
- return 1;
+ 
+ return " refactored SentinelOne data into file $filename";
 }#end printToFile
 
 sub main (){
@@ -46,8 +48,8 @@ sub main (){
 
  for $data (<>){   # read the file line by line passed at runtime
    $line1 = $data if ($count++ == 0);
-   foreach my $s (@strip){
-      $data =~s/$s//;  #strip data
+   foreach my $remove (@strip){
+      $data =~s/$remove//;  #strip data
    }
    
    if ($data=~m/$ladGROUP/){  #local AD group name
@@ -61,15 +63,11 @@ sub main (){
 
   #print "line1: $line1\n";
   #print Dumper(@lad);
-  print "Writing to file $filename_localAD\n";
-  if (printToFile($filename_localAD, @lad)) { print "  ...Done\n"; }
-  else { print "Failed.... filename or data not provide\n";}
+   print printToFile($filename_localAD, @lad) . "\n";
 
   #print Dumper(@azure);
-  print "Writing to file $filename_intune\n";
+   print printToFile($filename_intune, @azure) . "\n";
 
-  if(printToFile($filename_intune, @lad)){ print "  ...Done\n"; } 
-  else { print "Failed.... filename or data not provide\n";}
 }#end main()
 
 #print Dumper(@ARGV); exit;
