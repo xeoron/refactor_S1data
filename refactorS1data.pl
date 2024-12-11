@@ -29,7 +29,7 @@ sub printToFile($@) {  #Requires $filename, @csv_DATA
   open(FH, '>', $filename) or return $result;
      print FH $line1;  #head description of the columns
      foreach (@data){ print FH $_; }
-   close(FH);
+  close(FH);
  
  return " refactored SentinelOne data into file $filename";
 }#end printToFile
