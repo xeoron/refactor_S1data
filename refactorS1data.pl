@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 # Name: refactorS1data.pl
 # Author: Jason Campisi
-# Date: 12/5/2024
-# Version: v1.3.1
+# Date: 12/11/2024
+# Version: v1.3.2
 # Repository: https://github.com/xeoron/refactor_S1data
 # Purpose: Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only
 # License: Released under GPL v3 or higher. Details here http://www.gnu.org/licenses/gpl.html
@@ -21,10 +21,10 @@ my @strip = ("Dell Inc. - ");   #  Example of adding more: = ("x", "y", "z");
 
 
 sub printToFile($@) {  #Requires $filename, @csv_DATA
- my ($filename, @data) = @_;
- my $result = "Failed.... filename or data not provide";
+  my ($filename, @data) = @_;
+  my $result = "Failed.... filename or data not provide";
 
- return $result if ($filename eq "" or scalar(@data)==0); # #if varaibles are empty return false.
+  return $result if ($filename eq "" or scalar(@data)==0); # #if varaibles are empty return false.
 
   open(FH, '>', $filename) or return $result;
      print FH $line1;  #head description of the columns
@@ -43,32 +43,24 @@ sub main (){
  } 
 
 # local scope data refactor variables 
- my @lad = ();
- my @azure = ();
+ my @lad = (); # harvested local AD data
+ my @azure = (); # harvested azureAD data
 
- for $data (<>){   # read the file line by line passed at runtime
-   $line1 = $data if ($count++ == 0);
-   foreach my $remove (@strip){
-      $data =~s/$remove//;  #strip data
-   }
+  for $data (<>){   # read the file line by line passed at runtime
+     $line1 = $data if ($count++ == 0);
+     foreach my $remove (@strip){ $data =~s/$remove//; } #strip data
    
-   if ($data=~m/$ladGROUP/){  #local AD group name
-      push (@lad, $data); 
-      next;
-   }elsif ($data=~m/$azureGROUP/) {  #azureAD group name
-      push (@azure, $data); 
-      next;
-   }
- }#end read file
+     if ($data=~m/$ladGROUP/){ push (@lad, $data); next; } #local AD group name
+     elsif ($data=~m/$azureGROUP/) { push (@azure, $data); next; }#azureAD group name
+  }#end read file
 
   #print "line1: $line1\n";
   #print Dumper(@lad);
-   print printToFile($filename_localAD, @lad) . "\n";
-
   #print Dumper(@azure);
+   print printToFile($filename_localAD, @lad) . "\n";
    print printToFile($filename_intune, @azure) . "\n";
 
 }#end main()
 
 #print Dumper(@ARGV); exit;
-main();
+main(); #run
