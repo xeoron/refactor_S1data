@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 # Name: refactorS1data.pl
 # Author: Jason Campisi
-# Date: 12/11/2024
-# Version: v1.3.2
+# Date: 2/4/2025
+# Version: v1.3.3
 # Repository: https://github.com/xeoron/refactor_S1data
 # Purpose: Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only
 # License: Released under GPL v3 or higher. Details here http://www.gnu.org/licenses/gpl.html
@@ -34,11 +34,11 @@ sub printToFile($@) {  #Requires $filename, @csv_DATA
  return " refactored SentinelOne data into file $filename";
 }#end printToFile
 
-sub main (){
+sub main(){
 
  if (scalar(@ARGV)==0){
-    print "Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only\n";
-    print "   Usage: refactorS1data.pl s1Data.csv\n";
+    print " Refactor Sentinel 1 export and spit out 2 files for LocalAD and AzureAD devices only\n";
+    print "   Usage: refactorS1data.pl s1Data.csv\n\n";
     exit; 
  } 
 
